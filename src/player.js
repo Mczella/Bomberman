@@ -113,7 +113,8 @@ function drawPlayer() {
   if (player1.isMoving && player1.isAlive) {
     damping = Math.abs(Math.sin(millis() / 50)) * 3; // 0 - 3
   }
-  textSize(cellSize);
+  textSize(cellSize)
+  textAlign(LEFT, BASELINE)
 
   if (player1.isAlive) {
     text("🤖", player1.x, player1.y + damping + offsetY);
