@@ -120,7 +120,7 @@ function addExplosion(x, y) {
         x,
         y,
         placedAt: millis(),
-        special: false // changes to true if it breaks a wall
+        isOut: false, // changes to true if it breaks a wall
     };
     explosions.push(explosion)
 }
@@ -128,6 +128,7 @@ function addExplosion(x, y) {
 function drawExplosions() {
     for (const explosion of explosions) {
         textSize(cellSize)
+        textAlign(LEFT, BASELINE)
         text("💥", explosion.x, explosion.y + offsetY)
     }
 }
@@ -143,39 +144,42 @@ function cleanupExplosions() {
             if (grid[boom.yi][boom.xi] === 3 || grid[boom.yi][boom.xi] === 4) {
                 grid[boom.yi][boom.xi] = 0
             } else if (grid[boom.yi][boom.xi] === 5) {
-                ex.special = true
+                ex.isOut = true
                 grid[boom.yi][boom.xi] = 7
             } else if (grid[boom.yi][boom.xi] === 6) {
-                ex.special = true
+                ex.isOut = true
                 grid[boom.yi][boom.xi] = 8
-            } else if (ex.special === false && grid[boom.yi][boom.xi] === 7) {
+            } else if (ex.isOut === false && grid[boom.yi][boom.xi] === 7) {
                 grid[boom.yi][boom.xi] = 0
-            } else if (ex.special === false && grid[boom.yi][boom.xi] === 8) {
+            } else if (ex.isOut === false && grid[boom.yi][boom.xi] === 8) {
                 grid[boom.yi][boom.xi] = 0
             } else if (grid[boom.yi][boom.xi] === 9) {
-                ex.special = true
+                ex.isOut = true
                 grid[boom.yi][boom.xi] = 10
-            } else if (ex.special === false && grid[boom.yi][boom.xi] === 10) {
+            } else if (ex.isOut === false && grid[boom.yi][boom.xi] === 10) {
                 grid[boom.yi][boom.xi] = 0
             } else if (grid[boom.yi][boom.xi] === 11) {
-                ex.special = true
+                ex.isOut = true
                 grid[boom.yi][boom.xi] = 12
-            } else if (ex.special === false && grid[boom.yi][boom.xi] === 12) {
+            } else if (ex.isOut === false && grid[boom.yi][boom.xi] === 12) {
+                ex.isOut = true
                 enemies.push(makeEnemy(boom.xi*cellSize, boom.yi*cellSize, "stupid"))
             } else if (grid[boom.yi][boom.xi] === 13) {
-                ex.special = true
+                ex.isOut = true
                 grid[boom.yi][boom.xi] = 14
-            } else if (ex.special === false && grid[boom.yi][boom.xi] === 14) {
+            } else if (ex.isOut === false && grid[boom.yi][boom.xi] === 14) {
                 grid[boom.yi][boom.xi] = 0
             } else if (grid[boom.yi][boom.xi] === 15) {
-                ex.special = true
+                ex.isOut = true
                 grid[boom.yi][boom.xi] = 16
-            } else if (ex.special === false && grid[boom.yi][boom.xi] === 16) {
+            } else if (ex.isOut === false && grid[boom.yi][boom.xi] === 16) {
                 grid[boom.yi][boom.xi] = 0
             }
             const liveEnemies = []
             for (const enemy of enemies) {
-                if (boom.yi === enemy.y/cellSize && boom.xi === enemy.x/cellSize) {
+                if (ex.isOut === false
+                    && boom.yi === enemy.y/cellSize
+                    && boom.xi === enemy.x/cellSize) {
                     enemy.isAlive = false
                 }
                 if (enemy.isAlive) {
