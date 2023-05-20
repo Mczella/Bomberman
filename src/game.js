@@ -8,7 +8,7 @@ const game = {
   level: 1,
   nowPlaying: 1,
   pause: true,
-  menu: true
+  menu: true,
 }
 
 let explosionSound;
@@ -24,6 +24,7 @@ function setup() {
 function draw() {
   background(115, 153, 95);
   textSize(cellSize);
+  textAlign(LEFT, BASELINE)
 
   for (let iy = 0; iy < rows; iy++) {
     for (let ix = 0; ix < cols; ix++) {
@@ -90,7 +91,7 @@ ${strg}`;
 
     if (game.pause === false) {
       detonateBombs()
-      if (player1.isAlive === true) {
+      if (player1.isAlive === true || game.level === 4) {
         movePlayer();
         if (enemies.length > 0) {
           for (const enemy of enemies) {
