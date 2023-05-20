@@ -26,8 +26,8 @@ function isCollidingWithBomb(destination) {
 }
 
 function takePrize(destination) {
-  const xi = destination.xi;
-  const yi = destination.yi;;
+  const xi = destination.xi
+  const yi = destination.yi
   const content = grid[yi][xi];
   if (content === 7) {
     grid[yi][xi] = 0
