@@ -89,13 +89,6 @@ function setLevel() {
     makeGrid()
     addPrizesToWalls()
     addEnemies()
-  } else if (game.level === 4) {
-    fill(255,255,255, 180)
-    rect(0, 0, width, height)
-    textSize(50)
-    fill(0, 0, 0)
-    textAlign(CENTER, CENTER)
-    text("YOU WON", width/2, height / 2)
   }
 }
 
@@ -120,19 +113,40 @@ function addEnemies() {
   function takeLife() {
     if (!player1.isAlive && player1.lives === 0) {
       enemies = []
-      // FIX shifted grid under rect
+      function keyPressed() {
+        if (keyCode === 13) {
+          game.level = 1
+          player1.moreBombs = 1
+          player1.detonateOnClick = false
+          player1.strongExplosion = false
+          player1.lives = 3
+          player1.walkThroughBombs = false
+          setLevel()
+        }
+      }
+
+      keyPressed()
       fill(255,255,255, 180)
       rect(0, 0, width, height)
       textSize(50)
       fill(0, 0, 0)
       textAlign(CENTER, CENTER)
       text("GAME OVER", width/2, height / 2)
+      textSize(25)
+      text("press enter to try again", width / 2, height / 2 + cellSize)
 
     } else if (!player1.isAlive) {
       player1.strongExplosion = false
       player1.detonateOnClick = false
       player1.lives--
       setLevel()
+    } else if (game.level === 4) { // FIX disappearing text
+      fill(255,255,255, 180)
+      rect(0, 0, width, height)
+      textSize(50)
+      fill(0, 0, 0)
+      textAlign(CENTER, CENTER)
+      text("YOU WON", width/2, height / 2)
     }
   }
 
@@ -152,7 +166,7 @@ function placeEnemies() {
 }
 
 function changeLevel() {
-  if (game.level !== game.nowPlaying) {
+  if (game.level !== game.nowPlaying && game.level !== 4) {
     game.nowPlaying = game.level
     setLevel()
   }
