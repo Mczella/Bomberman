@@ -38,14 +38,18 @@ function draw() {
                     || grid[iy][ix] === 13
                     || grid[iy][ix] === 15 ? "⬛️"
                         : grid[iy][ix] === 7 ? "🔥️"
-                            : grid[iy][ix] === 8 ? "️🟩\n️💣️"
-                                : grid[iy][ix] === 10 ? "️💗️"
-                                    : grid[iy][ix] === 12 ? "⚪️️"
-                                        : grid[iy][ix] === 14 ? "👣️"
-                                            : grid[iy][ix] === 16 ? "⏱"
-                                                : ""
+                            : grid[iy][ix] === 10 ? "️💗️"
+                                : grid[iy][ix] === 12 ? "⚪️️"
+                                    : grid[iy][ix] === 14 ? "👣️"
+                                        : grid[iy][ix] === 16 ? "⏱"
+                                            : ""
 
             text(emoji, ix * cellSize, iy * cellSize + offsetY)
+
+            if (grid[iy][ix] === 8) {
+                text("️🟩", ix * cellSize, iy * cellSize + offsetY) // more bombs
+                text("️💣️", ix * cellSize, iy * cellSize + offsetY) // more bombs
+            }
         }
     }
 
