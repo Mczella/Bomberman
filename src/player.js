@@ -15,7 +15,7 @@ const player1 = {
 
 function alignPlayer() {
   if (directions.size === 2) {
-     // FIX only snap if the bigger part is in the next cell
+     // FIX only snap if the bigger part of the player is in the next cell
       player1.x = positionToCellIdxAlign(player1).x
       player1.y = positionToCellIdxAlign(player1).y
 
@@ -95,7 +95,7 @@ function movePlayer() {
     if (isCollidingWithObstacle(getNextDest)) {
       return
     }
-    if (player1.walkThroughBombs === false) {// triggers collision with bomb
+    if (!player1.walkThroughBombs) {// triggers collision with bomb
       if (isCollidingWithBomb(getNextDest) && player1.onBomb === false) {
         return
       }
